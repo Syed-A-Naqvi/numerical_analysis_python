@@ -1,0 +1,146 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{setspace}
+\usepackage[top=0.25in, bottom=0.75in, left=1in, right=1.25in]{geometry}
+
+\title{CSCI / MATH 2072U - Assignment 2}
+\author{Syed Arham Naqvi \\ \small{100590852}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+\subsubsection*{QUESTION 1}
+
+To begin, since $f(x)=e^{-x}+\cos(x+1)-1$ is a sum of functions, each of which being continuous and differentiable
+$\forall x \in \mathbb{R}$, it must be the case that $f(x)$ is also continuous and differentiable $\forall x \in \mathbb{R}$
+including the interval $x\in[0,1]$.
+
+\begin{enumerate}
+
+    \item[(a)]  Let us first evaluate $f(x)$ as defined above at the lower and upper bounds of the interval $[0,1]$:
+
+                \begin{align*}
+                    \begin{split}
+                        \textbf{lower bound:}           \\
+                        f(0) &= e^{-(0)}+\cos((0)+1)-1          \\
+                             &= e^{0}+\cos(1)-1                 \\
+                             &= 1+\cos(1)-1                     \\
+                        f(0) &\approx 0.5403 > 0                \\
+                    \end{split}
+                    \begin{split}
+                        \textbf{upper bound:}           \\
+                        f(1) &= e^{-(1)}+\cos((1)+1)-1          \\
+                             &= e^{-1}+\cos(2)-1                \\
+                        f(1) &\approx -1.0483 < 0               \\
+                        \vphantom{\text{upper bound ($x=1$):}}  \\
+                    \end{split}
+                \end{align*}
+                
+                Now, because $f(x)$ is continuous over the interval $[0,1]$, and since $f(0) > 0 > f(1)$,
+                then by the Intermediate Value Theorem, there must exist some $c \in [0,1]$ such that $f(c)=0$.
+                So we have established that the equation $f(x)=0$ has at least one solution in the interval $[0,1].$ 
+
+    \item[(b)]  Next, we will use Rolle's Theorem to demonstrate that our discovery of the existence of at least one solution to the
+                equation $f(x)=0$ over the interval $[0,1]$ is actually unique.\\
+                \\
+                \textbf{Proof:}\\
+                Suppose there exist two values $a,b\in [0,1]$ such that $f(a)=f(b)=0$. Since we know that $f(x)$
+                is continuous and differentiable over the interval $[0,1]$, we can use Rolle's Theorem then to assert that there must
+                exist some $c$ such that $a\leq c \leq b$ and $f'(c)=0$.\\\\
+                Computing the first derivative of $f(x)$:
+                \begin{equation}
+                    \begin{split}
+                        \frac{d}{dx}f(x) &=\frac{d}{dx}\left(e^{-x}+\cos(x+1)-1\right)                  \\
+                                         &=\frac{d}{dx}e^{-x}+\frac{d}{dx}\cos(x+1)-\frac{d}{dx}(1)     \\
+                                         &=-e^{-x}-\sin(x+1)
+                    \end{split}
+                \end{equation}
+
+                Now setting $f'(x)=-e^{-x}-\sin(x+1)=0$ we find:
+                \begin{align}
+                    \notag
+                    -e^{-x}     \quad&<0\quad (\forall x \in [0,1])\\
+                    \notag
+                    -sin(x+1)   \quad&<0\quad (\forall x \in [0,1])\\
+                    \notag
+                    -e^{-x}+(-sin(x+1))   \quad&<0\quad (\forall x \in [0,1])\\
+                    \notag\\
+                    \therefore -e^{-x}-sin(x+1)   \quad&<0\quad (\forall x \in [0,1])
+                \end{align}
+                Meaning that there can exist no $c\in[0,1]$ such that $f'(c)=0$. This contradicts our assumption that there exist 
+                values $a,b\in[0,1]$ such that $f(a)=f(b)=0$ due the inapplicability of Rolle's Theorem over the interval $[0,1]$
+                for such values.\\\\
+                $\therefore$ we have shown by contradiction that the solution to the equation $f(x)=0$ over the interval $[0,1]$ 
+                is unique.
+    \pagebreak\\\\
+    
+    
+    \item[(c)]  Equipped with the function definitions of both $f(x)$ and $f'(x)$ we can utilize the Newton-Raphson iteration formula
+                to find the recurrence relation between iterates $x^{(k+1)}$ and $x^{(k)}$ for $k\in\{\mathbb{Z}|k \geq 0\}$.\\\\
+
+                We begin with the definition of $x^{(k+1)}$ in terms of $x^{(k)}$:
+                \begin{equation}
+                    x^{(k+1)} = x^{(k)}-\frac{f(x^{(k)})}{f'(x^{(k)})}
+                \end{equation}
+
+                Substituting the definitions of $f(x)$ and $f'(x)$ we arrive at our formula for $x^{(k+1)}$ in terms of $x^{(k)}$:
+                \begin{equation}
+                    x^{(k+1)} = x^{(k)} - \frac { e^{-x^{(k)}}+\cos(x^{(k)}+1)-1} {-e^{-x^{(k)}}-sin(x^{(k)}+1)}
+                \end{equation}
+    
+    \item[(g))] We can conclude based on the semi-log plots for the number of iterations vs error, the Newton-Raphson method was by
+                far the optimal method for obtaining a solution approximation with the specified accuracy. Not only does this method
+                require fewer iterations (as evident from the quadratic convergence of the Newton method vs the linear convergence
+                of the bisection method) but it also requires fewer computations per iteration when compared with the bisection method.
+\end{enumerate}
+\vspace{10pt}
+\subsubsection*{QUESTION 2}
+
+\begin{enumerate}
+
+
+    \item[(d)] Although the  Euler-Chebyshev Method did require one less iteration to converge, the amount of extra work required
+               to dervive the recurrence relation involving both first and second order derivatives, as well as the extra computations
+               required to compute the update step in the algorithm make this method not worth the effort in this case.
+
+\end{enumerate}
+\vspace{10pt}
+\subsubsection*{QUESTION 3}
+
+\begin{enumerate}
+
+
+    \item[(b)] By graphing $f(x)=4x^{4}-8x^{3}+7x^{2}-3x+\frac{1}{2}$ and its derivative $f'(x)=16x^{3}-24x^{2}+14x-3$ on the same
+               coordinate system, the reason for the non-quadratic, linear convergence of the Newton-Raphson approximation becomes
+               immediately clear. As $x$ approaches $0.5$, we see that the function $f(x)$ approaches a root which turns out is actually
+               the absolute minimum. More importantly, the absolute values of tangential slope, at points along the curve as $x$
+               gets to be very close to $0.5$, become orders of magnitude larger than the corresponding values of $f(x)$. This leads to
+               an incredibly small update step $\delta{x}=-\frac{f(x^{(k)})}{f'(x^{(k)})}$ which results in a slower convergence rate.
+               In other words, if the distance between the function $f(x)$ and the x-axis is much smaller then the magnitude of slope
+               at the same point, then the Newton-Raphson iteration process will by design update to the next iterate by a very small
+               amount since the tangent at the previous iterate will immediately intercept the x-axis leading to a small change in
+               approximation.\\
+               \\
+               This demonstrates the large degree of dependency of the Newton-Rapshon method on function behaviour. If we are to compare
+               the convergence rate for this function to that of the function in question 1, we observe a much faster (quadratic)
+               convergence rate due to a large update step resulting from a small difference between function value and slope value near
+               the root.
+
+
+
+\end{enumerate}
+
+
+
+
+
+
+\end{document}

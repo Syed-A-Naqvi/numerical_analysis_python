@@ -1,0 +1,123 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{setspace}
+\usepackage[top=0.75in, bottom=0.75in, left=1in, right=1.5in]{geometry}
+
+
+\title{CSCI / MATH 2072U - Tutorial 2}
+\author{Arham Naqvi}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\vspace{10pt}
+
+
+\subsection*{Exercise A}
+\begin{enumerate}
+
+    \vspace{20pt}
+
+    \item[(a)]  Suppose we wanted to derive an iterative rule using the Newton-Raphson
+                method for the following function:
+
+                \begin{equation}
+                    f(x,a)=x^{2}-a, ~ (a \in \mathbb{R}~ \land \geq 0)
+                \end{equation}
+
+                \vspace{5pt}
+                Before we begin our derivation, let us first define $f'(x,a)$ as
+                it will be useful in future\\ calculations:
+
+                \begin{equation}
+                    f'(x,a) = 2x
+                \end{equation}
+
+                \vspace{5pt}
+                Our first step is to take some initial value $x^{(k)}$ for $k=0$,
+                as a plausible estimate for $x^*$ such that $f(x^*,a)=0$.
+                Evaluating $(1)$ at $x^{(k)}$ yields the following:
+
+                \begin{equation}
+                    f(x^{(k)},a) = (x^{(k)})^{2} - a 
+                \end{equation}
+
+                \vspace{5pt}
+                We can now define a point $P$ along our curve $f(x,a)$ such that $P=(x^{k},(x^{(k)})^{2} - a)$.
+                
+                \vspace{25pt}
+                Next, we extend a tangent line from $P$ and define the $x$-intercept of this
+                line as $(x^{(k+1)},0)$ where $x^{(k+1)}$ is the successive term
+                after $x^{(k)}$ in our Newton-Raphson iteration.
+                Using our tangent line at point $P$, its $x$-intercept and the defintion
+                of slope, we can now derive a recurrence relation between $x^{(k+1)}$
+                and $x^{(k)}$ as follows:
+
+                \begin{align*}
+                    f'(x^{(k)},a) &= \frac{0-f(x^{(k)},a)}{x^{(k+1)}-x^{(k)}}\\
+                    (x^{(k+1)}-x^{(k)})f'(x^{(k)},a) &= -f(x^{(k)},a)\\
+                    x^{(k+1)}-x^{(k)} &= -\frac{f(x^{(k)},a)}{f'(x^{(k)},a)}\\
+                    x^{(k+1)} &= x^{(k)}-\frac{f(x^{(k)},a)}{f'(x^{(k)},a)}
+                \end{align*}
+
+                \newpage
+                
+                Substitutting our results from $(2)$ and $(3)$ into the recurrence
+                relation above, we can find an iterative rule for calculating $x^{(k+1)}$:
+
+                \begin{align*}
+                    x^{(k+1)} &= x^{(k)}-\frac{f(x^{(k)},a)}{f'(x^{(k)},a)}\\
+                              &= x^{(k)}-\frac{(x^{(k)})^2-a}{2(x^{(k)})}\\
+                              &= \frac{2(x^{(k)})^2 - (x^{(k)})^2 + a}{2(x^{(k)})}\\
+                              &= \frac{(x^{(k)})^2 + a}{2(x^{(k)})}\\
+                              &= \left(\frac{1}{2}\right) \left(x^{(k)} + \frac{a}{x^{(k)}}\right)\\
+                \end{align*}
+                
+                Here we arrive at the familiar definition for $x^{(k+1)}$ in terms
+                of $\phi(x^{(k)})$, demonstrating that the iteration rule from the
+                previous tutorial was actually an implementation of the Newton-Raphson method
+                for solving equation $(1)$:
+
+                \begin{equation}
+                    x^{(k+1)} = \phi(x^{(k)}) = \left(\frac{1}{2}\right) \left(x^{(k)} + \frac{a}{x^{(k)}}\right)
+                \end{equation}
+
+                \vspace{20pt}
+
+    \item[(b)]  Here we will show that if $x^{(k+1)} = \phi(x^{(k)}) = x^{(k)}$, then
+                $x^{(k)}$ is the solution to equation $(1)$.
+
+                \vspace{5pt}
+                Suppose that $x^{(k+1)} = x^{(k)}$, we can see immediatley that $\delta(x)$,
+                which is defined as the difference between successive approximates for $x^*$
+                must be equal to zero since
+                $\delta(x) = x^{(k+1)} - x^{(k)} = x^{(k)} - x^{(k)} = 0$.
+
+                Now consider the following:
+
+                \begin{align*}
+                    x^{(k+1)} &= x^{(k)}-\frac{f(x^{(k)},a)}{f'(x^{(k)},a)}\\
+                    x^{(k+1)} - x^{(k)} &= -\frac{f(x^{(k)},a)}{f'(x^{(k)},a)}\\
+                    0 &= -\frac{f(x^{(k)},a)}{f'(x^{(k)},a)}\\
+                    0 &= f(x^{(k)},a)\\
+                    0 &= x^{(k)})^2 - a\\
+                    \sqrt{a} &= x^{(k)}
+                \end{align*}
+
+                Hence, whenever an iterate $(x^{(k)})$ is equal to the sucessive iterate $(x^{(k+1)})$,
+                the difference between the two iterates becomes zero $(\delta x=0)$. As evident from
+                the algebraic manipulation above we find that whenever this is the case, it implies that
+                the previous iterate must be the solution to the equation $x^{(k)}=\sqrt{a}$.
+                It is also important to note that this finding holds true not only in the case of the
+                initial guess where $k=0$, but $\forall k(k\in\mathbb{Z}~\land~k\geq 0)$.
+    
+
+\end{enumerate}
+
+
+\end{document}
